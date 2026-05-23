@@ -111,7 +111,7 @@ async function validateResetToken({ token }: any) {
     const account = await db.Account.findOne({
         where: {
             resetToken: token,
-            resetTokenExpires: { [Op.gt]: Date.now() },
+            resetTokenExpires: { [Op.gt]: new Date() },
         },
     });
     if (!account) throw "Invalid token";
