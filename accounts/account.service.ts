@@ -204,7 +204,7 @@ function generateRefreshToken(account: any, ipAddress: any) {
 }
 
 function randomTokenString() {
-    return crypto.randomBytes(40).toString("hex");
+    return crypto.randomUUID();
 }
 
 function basicDetails(account: any) {
