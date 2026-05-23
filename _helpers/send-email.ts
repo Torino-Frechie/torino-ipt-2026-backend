@@ -6,7 +6,10 @@ export default async function sendEmail({ to, subject, html }: any) {
         html: html,
     };
 
-     ._API_KEY is missing from env 
+    if (!process.env.RESEND_API_KEY) {
+        console.error('RESEND_API_KEY is missing from environment variables');
+        throw new Error('Email configuration error');
+    }
 
     try {
         const response = await fetch('https://api.resend.com/emails', {
@@ -21,7 +24,11 @@ export default async function sendEmail({ to, subject, html }: any) {
         if (!response.ok) {
             const data = await response.json();
             console.error('Resend API Error details:', JSON.stringify(data));
-        r(err) {
+            throw new Error(`Email failed: ${JSON.stringify(data)}`);
+        }
+
+        console.log(`Email successfully sent to ${to}`);
+    } catch (err) {
         console.error('Send email error:', err);
         throw err;
     }
