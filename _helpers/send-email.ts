@@ -10,19 +10,19 @@ export default async function sendEmail({ to, subject, html }: any) {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                from: 'onboarding@resend.dev',
-                to: authorizedEmail,
+                from: 'Torino App <onboarding@resend.dev>',
+                to: [authorizedEmail],
                 subject: `[TEST] ${subject}`,
                 html: modifiedHtml,
             }),
         });
 
         if (!response.ok) {
-            const error = await response.text();
+            const error = await response.json();
             console.error('Resend Error:', error);
-            throw new Error(`Email failed: ${error}`);
+            throw new Error(`Email failed: ${JSON.stringify(error)}`);
         } else {
-            console.log(`Success! Email for ${to} was redirected to ${authorizedEmail}`);
+            console.log(`Success! Email sent to ${authorizedEmail}`);
         }
     } catch (err) {
         console.error('Network error:', err);
