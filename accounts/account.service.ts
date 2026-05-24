@@ -92,7 +92,7 @@ async function verifyEmail({ token }: any) {
     const account = await db.Account.findOne({
         where: { verificationToken: token },
     });
-    if (!account) throw "Verification failed";
+    if (!account) throw "Verification failed, you can also verify your account using the forgot password page";
     account.verified = new Date();
     account.verificationToken = null;
     await account.save();
