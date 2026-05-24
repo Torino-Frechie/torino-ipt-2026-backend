@@ -59,6 +59,6 @@ async function initialize() {
         console.log('Database initialized successfully.');
     } catch (error) {
         console.error('Database initialization failed:', error);
-        throw error; // Re-throw to propagate the error
+        process.exit(1);
     }
 }

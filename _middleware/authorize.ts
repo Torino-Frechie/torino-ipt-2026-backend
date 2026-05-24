@@ -16,6 +16,11 @@ export default function authorize(roles: any = []) {
         },
 
         async (req: any, res: any, next: any) => {
+            if (!db.Account) {
+                return res.status(500).json({
+                    message: 'Database is currently unavailable. Please try again later.',
+                });
+            }
             const account = await db.Account.findByPk(req.user.id);
 
             if (!account || (roles.length && !roles.includes(account.role))) {
